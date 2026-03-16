@@ -1,0 +1,11 @@
+package regras
+
+import com.drools.domain.Cliente
+
+rule "Aplicar desconto para cliente idoso"
+when
+    $cliente : Cliente( idade >= 60 )
+then
+    $cliente.setDescontoPercentual(10);
+    System.out.println("Desconto de 10% aplicado para: " + $cliente.getNome());
+end
