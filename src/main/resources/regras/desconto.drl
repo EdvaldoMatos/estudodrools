@@ -1,6 +1,7 @@
 package regras
 
 import com.drools.domain.Cliente
+import java.math.BigDecimal
 
 rule "Aplicar desconto para cliente idoso"
 when
@@ -8,4 +9,20 @@ when
 then
     $cliente.setDescontoPercentual(10);
     System.out.println("Desconto de 10% aplicado para: " + $cliente.getNome());
+end
+
+rule "Desconto para cliente VIP"
+when
+    $cliente : Cliente( tipoCliente != null && tipoCliente.equalsIgnoreCase("VIP") )
+then
+    $cliente.aplicarMaiorDesconto(15);
+    System.out.println("Regra VIP aplicada para: " + $cliente.getNome());
+end
+
+rule "Desconto por valor de compra"
+when
+    $cliente : Cliente( valorCompra != null, valorCompra.compareTo(new BigDecimal("1000.00")) >= 0 )
+then
+    $cliente.aplicarMaiorDesconto(5);
+    System.out.println("Regra VALOR COMPRA aplicada para: " + $cliente.getNome());
 end
