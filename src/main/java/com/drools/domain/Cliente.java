@@ -16,23 +16,26 @@ import java.math.RoundingMode;
 @NoArgsConstructor
 @Builder
 public class Cliente {
+
     private String nome;
     private Integer idade;
+    private String tipoCliente;
 
     @Builder.Default
-    private BigDecimal valorCompra =  BigDecimal.ZERO;
+    private BigDecimal valorCompra = BigDecimal.ZERO;
 
     @Builder.Default
     private Integer descontoPercentual = 0;
 
-    public void aplicarMaiorDesconto(Integer novoDesconto){
+    public void aplicarMaiorDesconto(Integer novoDesconto) {
         int descontoAtual = this.descontoPercentual == null ? 0 : this.descontoPercentual;
         int novo = novoDesconto == null ? 0 : novoDesconto;
 
-        if(novo >descontoAtual){
+        if (novo > descontoAtual) {
             this.descontoPercentual = novo;
         }
     }
+
     public BigDecimal calcularValorDesconto() {
         BigDecimal percentual = BigDecimal.valueOf(
                 descontoPercentual == null ? 0 : descontoPercentual

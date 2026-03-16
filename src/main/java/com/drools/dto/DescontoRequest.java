@@ -14,5 +14,6 @@ import java.math.BigDecimal;
 public class DescontoRequest {
     private String nome;
     private Integer idade;
+    private String tipoCliente;
     private BigDecimal valorCompra;
 }
