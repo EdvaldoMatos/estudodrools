@@ -1,0 +1,13 @@
+package regras
+
+import com.drools.domain.Cliente
+
+rule "Desconto para cliente idoso"
+    agenda-group "descontos"
+    salience 20
+when
+    $cliente : Cliente( idade != null && idade >= 60 )
+then
+    $cliente.aplicarMaiorDesconto(10);
+    System.out.println("Regra IDOSO aplicada para: " + $cliente.getNome());
+end

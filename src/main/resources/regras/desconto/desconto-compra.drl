@@ -1,0 +1,17 @@
+package regras
+
+import com.drools.domain.Cliente
+import java.math.BigDecimal
+
+rule "Desconto por valor de compra"
+    agenda-group "descontos"
+    salience 10
+when
+    $cliente : Cliente(
+        valorCompra != null,
+        valorCompra.compareTo(new BigDecimal("1000.00")) >= 0
+    )
+then
+    $cliente.aplicarMaiorDesconto(5);
+    System.out.println("Regra COMPRA aplicada para: " + $cliente.getNome());
+end

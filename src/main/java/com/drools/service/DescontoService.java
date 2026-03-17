@@ -12,8 +12,14 @@ public class DescontoService {
     private final KieSession kieSession;
 
     public Cliente aplicarRegras(Cliente cliente) {
+        try{
         kieSession.insert(cliente);
+        kieSession.getAgenda().getAgendaGroup("descontos").setFocus();
         kieSession.fireAllRules();
         return cliente;
+
+        }finally {
+            kieSession.dispose();
+        }
     }
 }
