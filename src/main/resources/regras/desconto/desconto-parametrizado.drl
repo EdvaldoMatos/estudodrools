@@ -1,0 +1,29 @@
+package regras
+
+import com.drools.domain.Cliente
+import com.drools.domain.DescontoConfig
+import java.math.BigDecimal
+
+rule "Aplicar desconto parametrizado"
+    agenda-group "descontos"
+    salience 100
+when
+    $cliente : Cliente()
+
+    $config : DescontoConfig(
+        (tipoCliente == null || tipoCliente.equalsIgnoreCase($cliente.getTipoCliente())) &&
+        (idadeMinima == null || $cliente.getIdade() != null && $cliente.getIdade() >= idadeMinima) &&
+        (
+            valorMinimoCompra == null ||
+            ($cliente.getValorCompra() != null && $cliente.getValorCompra().compareTo(valorMinimoCompra) >= 0)
+        )
+    )
+then
+    $cliente.aplicarMaiorDesconto($config.getDescontoPercentual());
+
+    System.out.println(
+        "Regra parametrizada aplicada para: " + $cliente.getNome()
+        + " | desconto=" + $config.getDescontoPercentual()
+        + "% | prioridade=" + $config.getPrioridade()
+    );
+end

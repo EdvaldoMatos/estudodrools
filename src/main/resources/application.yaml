@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: drools-demo
+
+  datasource:
+    url: jdbc:h2:mem:droolsdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    defer-datasource-initialization: true
+
+server:
+  port: 8080
