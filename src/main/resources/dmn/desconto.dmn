@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/"
+             xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/"
+             id="Definitions_DescontoCliente"
+             name="DescontoCliente"
+             namespace="https://exemplo.com/dmn/desconto">
+
+    <inputData id="InputData_idade" name="idade">
+        <variable id="InputData_idade_var" name="idade" typeRef="number"/>
+    </inputData>
+
+    <inputData id="InputData_tipoCliente" name="tipoCliente">
+        <variable id="InputData_tipoCliente_var" name="tipoCliente" typeRef="string"/>
+    </inputData>
+
+    <inputData id="InputData_valorCompra" name="valorCompra">
+        <variable id="InputData_valorCompra_var" name="valorCompra" typeRef="number"/>
+    </inputData>
+
+    <decision id="Decision_descontoPercentual" name="descontoPercentual">
+        <variable id="Decision_descontoPercentual_var" name="descontoPercentual" typeRef="number"/>
+
+        <informationRequirement>
+            <requiredInput href="#InputData_idade"/>
+        </informationRequirement>
+
+        <informationRequirement>
+            <requiredInput href="#InputData_tipoCliente"/>
+        </informationRequirement>
+
+        <informationRequirement>
+            <requiredInput href="#InputData_valorCompra"/>
+        </informationRequirement>
+
+        <decisionTable id="DecisionTable_Desconto" hitPolicy="FIRST">
+            <input id="InputClause_idade">
+                <inputExpression id="InputExpression_idade" typeRef="number">
+                    <text>idade</text>
+                </inputExpression>
+            </input>
+
+            <input id="InputClause_tipoCliente">
+                <inputExpression id="InputExpression_tipoCliente" typeRef="string">
+                    <text>tipoCliente</text>
+                </inputExpression>
+            </input>
+
+            <input id="InputClause_valorCompra">
+                <inputExpression id="InputExpression_valorCompra" typeRef="number">
+                    <text>valorCompra</text>
+                </inputExpression>
+            </input>
+
+            <output id="OutputClause_desconto" name="descontoPercentual" typeRef="number"/>
+
+            <rule id="Rule_VIP">
+                <inputEntry id="Rule_VIP_idade">
+                    <text>-</text>
+                </inputEntry>
+                <inputEntry id="Rule_VIP_tipoCliente">
+                    <text>"VIP"</text>
+                </inputEntry>
+                <inputEntry id="Rule_VIP_valorCompra">
+                    <text>-</text>
+                </inputEntry>
+                <outputEntry id="Rule_VIP_output">
+                    <text>15</text>
+                </outputEntry>
+            </rule>
+
+            <rule id="Rule_Idoso">
+                <inputEntry id="Rule_Idoso_idade">
+                    <text>&gt;= 60</text>
+                </inputEntry>
+                <inputEntry id="Rule_Idoso_tipoCliente">
+                    <text>-</text>
+                </inputEntry>
+                <inputEntry id="Rule_Idoso_valorCompra">
+                    <text>-</text>
+                </inputEntry>
+                <outputEntry id="Rule_Idoso_output">
+                    <text>10</text>
+                </outputEntry>
+            </rule>
+
+            <rule id="Rule_CompraAlta">
+                <inputEntry id="Rule_CompraAlta_idade">
+                    <text>-</text>
+                </inputEntry>
+                <inputEntry id="Rule_CompraAlta_tipoCliente">
+                    <text>-</text>
+                </inputEntry>
+                <inputEntry id="Rule_CompraAlta_valorCompra">
+                    <text>&gt;= 1000</text>
+                </inputEntry>
+                <outputEntry id="Rule_CompraAlta_output">
+                    <text>5</text>
+                </outputEntry>
+            </rule>
+
+            <rule id="Rule_Default">
+                <inputEntry id="Rule_Default_idade">
+                    <text>-</text>
+                </inputEntry>
+                <inputEntry id="Rule_Default_tipoCliente">
+                    <text>-</text>
+                </inputEntry>
+                <inputEntry id="Rule_Default_valorCompra">
+                    <text>-</text>
+                </inputEntry>
+                <outputEntry id="Rule_Default_output">
+                    <text>0</text>
+                </outputEntry>
+            </rule>
+        </decisionTable>
+    </decision>
+</definitions>
